@@ -1,6 +1,6 @@
 <ion-menu [content]="content">
   <ion-header>
-    <ion-toolbar>
+    <ion-toolbar primary>
       <ion-title>Menu</ion-title>
     </ion-toolbar>
   </ion-header>
@@ -10,6 +10,12 @@
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
         {{p.title}}
       </button>
+      <button menuClose ion-item (click)="logOut()">
+          Logout
+</button>
+      <button menuClose ion-item *ngIf="newlocal">
+          {{newlocal}}
+</button>
     </ion-list>
   </ion-content>
 

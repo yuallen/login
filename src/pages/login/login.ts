@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
 import { Http } from "@angular/http";
 import 'rxjs/add/operator/map';
+import { Page1 } from "../page1/page1";
 
 /*
   Generated class for the Login page.
@@ -16,7 +17,9 @@ import 'rxjs/add/operator/map';
 export class LoginPage {
   data : any;
   fetchdata : any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private http : Http) {
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private alert: AlertController, 
+  private http : Http, private loading : LoadingController) {
   this.data = {};
   this.data.username = "";
   this.data.password = "";
@@ -26,20 +29,33 @@ export class LoginPage {
   }
 
 submit(){
-  let username = this.data.username;
-  let password = this.data.password;
-  let data = JSON.stringify({username, password});
-  let link = "../../www/welcome.php";
+  var isAuthenticated = false;
+  let username1 = this.data.username;
+  let password1 = this.data.password1;
+  let data = JSON.stringify({username1, password1});
+  let link = "http://localhost:80/Login.php";
 
   this.http.post(link, data)
-  .map(res => res.json())
-    .subscribe(data=>{
+    .subscribe(data=>{      
       this.fetchdata = data;
       console.log(this.fetchdata);
+      let loader = this.loading.create({
+        content: "Checking... Please wait...",
+        duration:500
+      });
+      loader.present();
+      this.navCtrl.setRoot(Page1);
+      console.log("no error!!!");
     },error=>{
+      let alert = this.alert.create({
+        title:'Warning',
+        subTitle:"Wrong username or password. Please try again.",
+        buttons: ['OK']
+      });
+      alert.present();
       console.log("error!!!");
-    })
+
+    });
 
 }
-
 }

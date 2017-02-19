@@ -7,6 +7,7 @@ import { Page2 } from '../pages/page2/page2';
 import { LoginPage } from "../pages/login/login";
 
 
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -42,4 +43,10 @@ export class MyApp {
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
   }
+
+
+logOut(){
+  this.nav.setRoot(LoginPage);
+}
+
 }
