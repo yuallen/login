@@ -30,11 +30,12 @@ export class LoginPage {
 
 submit(){
   var isAuthenticated = false;
-  let username1 = this.data.username;
-  let password1 = this.data.password1;
-  let data = JSON.stringify({username1, password1});
+  let username = this.data.username;
+  let password = this.data.password;
+  let data = JSON.stringify({username, password});
   let link = "http://localhost:80/Login.php";
-
+if (username != "" || password != "")
+{
   this.http.post(link, data)
     .subscribe(data=>{      
       this.fetchdata = data;
@@ -56,6 +57,17 @@ submit(){
       console.log("error!!!");
 
     });
-
+}
+else
+{
+  error=>{
+      let alert = this.alert.create({
+        title:'Warning',
+        subTitle:"Wrong username or password. Please try again.",
+        buttons: ['OK']
+      });
+      alert.present();
+      console.log("error!!!");}
+}
 }
 }
